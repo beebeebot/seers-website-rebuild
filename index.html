@@ -5,40 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A New Digital Home — Seers Digital</title>
 
-    <!-- Fonts: DM Sans for clean professionalism -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
 
     <style>
         /* ===========================================
-           THEME — Light, optimistic, professional
+           THEME — Electric Studio: warm, clean, modern
            =========================================== */
         :root {
-            --bg-primary: #FAFAF8;
-            --bg-slide-alt: #F0EFEB;
+            --bg-primary: #F7F6F3;
+            --bg-alt: #EFEEEB;
             --text-primary: #1A1A1A;
             --text-secondary: #6B6B6B;
-            --accent: #2563EB;
-            --accent-light: #DBEAFE;
-            --accent-warm: #F59E0B;
-            --accent-warm-light: #FEF3C7;
-            --accent-green: #10B981;
-            --accent-green-light: #D1FAE5;
-            --accent-red: #EF4444;
-            --accent-red-light: #FEE2E2;
+            --text-muted: #999;
+            --accent: #FF5A1F;
+            --accent-light: #FFF1EB;
+            --accent-green: #16A34A;
+            --accent-green-light: #F0FDF4;
+            --accent-red: #DC2626;
+            --accent-red-light: #FEF2F2;
+            --accent-blue: #2563EB;
+            --accent-blue-light: #EFF6FF;
+            --white: #FFFFFF;
 
-            --font-display: 'DM Serif Display', serif;
-            --font-body: 'DM Sans', sans-serif;
+            --font-display: 'Cabinet Grotesk', sans-serif;
+            --font-body: 'General Sans', sans-serif;
 
-            --title-size: clamp(2rem, 5.5vw, 4.5rem);
-            --h2-size: clamp(1.5rem, 3.5vw, 2.75rem);
-            --h3-size: clamp(1.1rem, 2vw, 1.5rem);
-            --body-size: clamp(0.8rem, 1.4vw, 1.125rem);
-            --small-size: clamp(0.7rem, 1vw, 0.875rem);
+            --title-size: clamp(2.2rem, 6vw, 5rem);
+            --h2-size: clamp(1.6rem, 4vw, 3rem);
+            --h3-size: clamp(1rem, 1.8vw, 1.25rem);
+            --body-size: clamp(0.8rem, 1.3vw, 1.05rem);
+            --small-size: clamp(0.7rem, 1vw, 0.85rem);
 
             --slide-padding: clamp(1.5rem, 5vw, 5rem);
-            --content-gap: clamp(0.75rem, 2vw, 2rem);
-            --element-gap: clamp(0.3rem, 1vw, 0.75rem);
+            --content-gap: clamp(0.75rem, 2vw, 1.75rem);
+            --element-gap: clamp(0.3rem, 0.8vw, 0.6rem);
 
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --duration: 0.7s;
@@ -66,7 +66,7 @@
         }
 
         /* ===========================================
-           SLIDES — Viewport locked
+           SLIDES
            =========================================== */
         .slide {
             width: 100vw;
@@ -79,7 +79,15 @@
             justify-content: center;
             position: relative;
             padding: var(--slide-padding);
+            background: var(--bg-primary);
         }
+
+        .slide.alt { background: var(--bg-alt); }
+        .slide.dark {
+            background: #1A1A1A;
+            color: #FFFFFF;
+        }
+        .slide.dark .text-secondary { color: rgba(255,255,255,0.5); }
 
         .slide-content {
             flex: 1;
@@ -88,7 +96,7 @@
             justify-content: center;
             max-height: 100%;
             overflow: hidden;
-            max-width: 1100px;
+            max-width: 1000px;
         }
 
         .slide-content.centered {
@@ -97,9 +105,23 @@
             margin: 0 auto;
         }
 
-        /* Alternate bg */
-        .slide:nth-child(even) { background: var(--bg-slide-alt); }
-        .slide:nth-child(odd) { background: var(--bg-primary); }
+        /* Accent blob — top right of select slides */
+        .slide.has-blob::before {
+            content: '';
+            position: absolute;
+            top: -15%;
+            right: -8%;
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 90, 31, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .slide-content { position: relative; z-index: 1; }
 
         /* ===========================================
            TYPOGRAPHY
@@ -107,25 +129,26 @@
         h1 {
             font-family: var(--font-display);
             font-size: var(--title-size);
-            font-weight: 400;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
+            font-weight: 800;
+            line-height: 1.0;
+            letter-spacing: -0.04em;
         }
+
+        h1 .highlight { color: var(--accent); }
 
         h2 {
             font-family: var(--font-display);
             font-size: var(--h2-size);
-            font-weight: 400;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
             margin-bottom: var(--content-gap);
         }
 
         h3 {
             font-family: var(--font-body);
             font-size: var(--h3-size);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.3;
         }
 
@@ -136,18 +159,18 @@
         }
 
         .subtitle {
-            font-size: clamp(1rem, 2vw, 1.35rem);
+            font-size: clamp(0.9rem, 1.6vw, 1.15rem);
             color: var(--text-secondary);
-            font-weight: 300;
-            margin-top: var(--element-gap);
-            line-height: 1.5;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 600px;
         }
 
         .label {
             font-size: var(--small-size);
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.15em;
             color: var(--accent);
             margin-bottom: var(--element-gap);
         }
@@ -156,25 +179,52 @@
            COMPONENTS
            =========================================== */
 
-        /* Score badge */
-        .score-badge {
-            display: inline-flex;
-            align-items: baseline;
+        /* Pills */
+        .pill-row {
+            display: flex;
             gap: clamp(0.3rem, 0.8vw, 0.6rem);
-            margin-bottom: var(--content-gap);
+            flex-wrap: wrap;
+            margin-top: var(--content-gap);
         }
 
-        .score-badge .number {
+        .pill {
+            padding: 0.35em 0.9em;
+            border-radius: 100px;
+            font-size: var(--small-size);
+            font-weight: 500;
+            background: var(--white);
+            border: 1px solid #E5E5E5;
+            color: #555;
+        }
+
+        .pill.accent {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Score */
+        .score-row {
+            display: flex;
+            align-items: baseline;
+            gap: clamp(0.3rem, 0.8vw, 0.5rem);
+            margin-bottom: var(--element-gap);
+        }
+
+        .score-number {
             font-family: var(--font-display);
-            font-size: clamp(3rem, 8vw, 7rem);
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            font-weight: 800;
             line-height: 1;
-            color: var(--accent-red);
+            letter-spacing: -0.04em;
+            color: var(--accent);
         }
 
-        .score-badge .out-of {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-secondary);
-            font-weight: 300;
+        .score-unit {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            font-weight: 500;
+            color: var(--text-muted);
         }
 
         /* Bullet list */
@@ -182,11 +232,11 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: clamp(0.5rem, 1.2vh, 1rem);
+            gap: clamp(0.4rem, 1vh, 0.85rem);
         }
 
         .bullet-list li {
-            padding-left: 1.5em;
+            padding-left: 1.4em;
             position: relative;
         }
 
@@ -194,36 +244,35 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 0.6em;
-            width: 8px;
-            height: 8px;
+            top: 0.55em;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--accent);
         }
 
-        /* Cards grid */
+        /* Cards */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-            gap: clamp(0.6rem, 1.5vw, 1.25rem);
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: clamp(0.5rem, 1.2vw, 1rem);
         }
 
         .card {
-            background: white;
-            border-radius: 12px;
-            padding: clamp(1rem, 2vw, 1.5rem);
-            border: 1px solid rgba(0,0,0,0.06);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            background: var(--white);
+            border-radius: 14px;
+            padding: clamp(0.9rem, 2vw, 1.4rem);
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .card .icon {
-            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-size: clamp(1.3rem, 2.5vw, 1.75rem);
             margin-bottom: var(--element-gap);
         }
 
         .card h3 {
-            margin-bottom: clamp(0.2rem, 0.5vw, 0.4rem);
-            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            margin-bottom: clamp(0.15rem, 0.4vw, 0.3rem);
+            font-size: clamp(0.85rem, 1.4vw, 1.05rem);
         }
 
         .card p {
@@ -231,29 +280,11 @@
             line-height: 1.5;
         }
 
-        /* Highlight box */
-        .highlight-box {
-            background: var(--accent-light);
-            border-radius: 12px;
-            padding: clamp(1rem, 2.5vw, 2rem);
-            border-left: 4px solid var(--accent);
-        }
-
-        .highlight-box.warm {
-            background: var(--accent-warm-light);
-            border-left-color: var(--accent-warm);
-        }
-
-        .highlight-box.green {
-            background: var(--accent-green-light);
-            border-left-color: var(--accent-green);
-        }
-
-        /* Two-column */
+        /* Two column */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: clamp(1rem, 3vw, 3rem);
+            gap: clamp(1rem, 3vw, 2.5rem);
             align-items: start;
         }
 
@@ -261,38 +292,62 @@
             .two-col { grid-template-columns: 1fr; }
         }
 
+        /* Callout box */
+        .callout {
+            border-radius: 14px;
+            padding: clamp(0.9rem, 2.5vw, 1.75rem);
+            border-left: 4px solid var(--accent);
+            background: var(--accent-light);
+        }
+
+        .callout.green {
+            border-left-color: var(--accent-green);
+            background: var(--accent-green-light);
+        }
+
+        .callout.blue {
+            border-left-color: var(--accent-blue);
+            background: var(--accent-blue-light);
+        }
+
+        .callout h3 { margin-bottom: var(--element-gap); }
+
+        /* Column callouts */
+        .col-header {
+            font-family: var(--font-body);
+            font-size: var(--h3-size);
+            font-weight: 600;
+            margin-bottom: clamp(0.4rem, 1vw, 0.75rem);
+        }
+
+        .col-header.red { color: var(--accent-red); }
+        .col-header.green { color: var(--accent-green); }
+
         /* Slide number */
         .slide-num {
             position: absolute;
-            bottom: clamp(0.75rem, 2vw, 1.5rem);
-            right: clamp(1rem, 3vw, 2rem);
+            bottom: clamp(0.6rem, 1.5vw, 1.25rem);
+            right: clamp(0.8rem, 2vw, 1.5rem);
             font-size: var(--small-size);
-            color: rgba(0,0,0,0.2);
+            color: rgba(0,0,0,0.15);
             font-weight: 500;
         }
 
-        /* Divider */
-        .divider {
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 2px;
-            margin: var(--element-gap) 0;
-        }
+        .slide.dark .slide-num { color: rgba(255,255,255,0.15); }
 
         /* ===========================================
            ANIMATIONS
            =========================================== */
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateX(-24px);
             transition: opacity var(--duration) var(--ease-out-expo),
                         transform var(--duration) var(--ease-out-expo);
         }
 
         .slide.visible .reveal {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
         }
 
         .reveal:nth-child(1) { transition-delay: 0.05s; }
@@ -300,6 +355,7 @@
         .reveal:nth-child(3) { transition-delay: 0.25s; }
         .reveal:nth-child(4) { transition-delay: 0.35s; }
         .reveal:nth-child(5) { transition-delay: 0.45s; }
+        .reveal:nth-child(6) { transition-delay: 0.55s; }
 
         /* Progress bar */
         .progress-bar {
@@ -315,7 +371,7 @@
         /* Nav dots */
         .nav-dots {
             position: fixed;
-            right: clamp(0.5rem, 1.5vw, 1.25rem);
+            right: clamp(0.4rem, 1.2vw, 1rem);
             top: 50%;
             transform: translateY(-50%);
             display: flex;
@@ -328,7 +384,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: rgba(0,0,0,0.15);
+            background: rgba(0,0,0,0.12);
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
@@ -337,7 +393,7 @@
 
         .nav-dot.active {
             background: var(--accent);
-            transform: scale(1.3);
+            transform: scale(1.4);
         }
 
         /* ===========================================
@@ -347,8 +403,8 @@
             :root {
                 --slide-padding: clamp(1rem, 3vw, 2.5rem);
                 --content-gap: clamp(0.5rem, 1.5vw, 1rem);
-                --title-size: clamp(1.5rem, 5vw, 3rem);
-                --h2-size: clamp(1.25rem, 3vw, 2rem);
+                --title-size: clamp(1.8rem, 5vw, 3.5rem);
+                --h2-size: clamp(1.3rem, 3vw, 2.25rem);
             }
         }
 
@@ -357,15 +413,19 @@
                 --slide-padding: clamp(0.75rem, 2.5vw, 1.5rem);
                 --content-gap: clamp(0.4rem, 1vw, 0.75rem);
             }
-            .nav-dots { display: none; }
+            .nav-dots, .slide.has-blob::before { display: none; }
         }
 
         @media (max-height: 500px) {
             :root {
-                --title-size: clamp(1.2rem, 4vw, 1.8rem);
-                --h2-size: clamp(1rem, 2.5vw, 1.5rem);
+                --title-size: clamp(1.3rem, 4vw, 2rem);
+                --h2-size: clamp(1.1rem, 2.5vw, 1.6rem);
                 --body-size: clamp(0.65rem, 1vw, 0.85rem);
             }
+        }
+
+        @media (max-width: 600px) {
+            :root { --title-size: clamp(1.8rem, 8vw, 3rem); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -385,13 +445,18 @@
     <!-- =========================================
          SLIDE 1: Title
          ========================================= -->
-    <section class="slide" style="background: var(--bg-primary);">
-        <div class="slide-content centered">
+    <section class="slide has-blob">
+        <div class="slide-content">
             <p class="label reveal">Seers Digital — Website Strategy</p>
-            <h1 class="reveal">A New Digital Home</h1>
-            <p class="subtitle reveal">Why a website rebuild will help us win more work,<br>attract better talent, and get found — by humans and AI alike.</p>
-            <div class="divider reveal" style="margin: var(--content-gap) auto;"></div>
-            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">Mitch Malone · March 2026</p>
+            <h1 class="reveal">A New<br><span class="highlight">Digital Home</span></h1>
+            <p class="subtitle reveal" style="margin-top: var(--content-gap);">Why a rebuild will help us win more work and get found — by humans and AI alike.</p>
+            <div class="pill-row reveal">
+                <span class="pill accent">Website Rebuild</span>
+                <span class="pill">SEO</span>
+                <span class="pill">AI Visibility</span>
+                <span class="pill">GEO</span>
+            </div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-muted); margin-top: var(--content-gap);">Mitch Malone · March 2026</p>
         </div>
         <span class="slide-num">1</span>
     </section>
@@ -399,11 +464,11 @@
     <!-- =========================================
          SLIDE 2: The Opportunity
          ========================================= -->
-    <section class="slide">
+    <section class="slide alt">
         <div class="slide-content">
             <p class="label reveal">The Opportunity</p>
-            <h2 class="reveal">Our website should be our best salesperson</h2>
-            <p class="subtitle reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">We deliver technology services to Government and Enterprise. Our website should reflect that calibre — and right now, it doesn't.</p>
+            <h2 class="reveal">Our website should be<br>our best salesperson</h2>
+            <p class="subtitle reveal" style="margin-bottom: var(--content-gap);">We deliver technology services to Government and Enterprise. Our website should reflect that calibre — and right now, it doesn't.</p>
             <ul class="bullet-list reveal">
                 <li>Built on Strikingly — a consumer drag-and-drop builder, not an enterprise platform</li>
                 <li>Blog dormant since September 2023 — over 2.5 years with no fresh content</li>
@@ -417,19 +482,19 @@
     <!-- =========================================
          SLIDE 3: The Health Check
          ========================================= -->
-    <section class="slide">
+    <section class="slide has-blob">
         <div class="slide-content">
             <p class="label reveal">SEO Health Check</p>
-            <div class="score-badge reveal">
-                <span class="number">26</span>
-                <span class="out-of">/ 100</span>
+            <div class="score-row reveal">
+                <span class="score-number">26</span>
+                <span class="score-unit">/ 100</span>
             </div>
-            <h2 class="reveal" style="margin-bottom: var(--element-gap);">There's nowhere to go but up</h2>
-            <p class="subtitle reveal" style="max-width: 600px; margin-bottom: var(--content-gap);">A full audit of seers.digital revealed critical gaps across every category. The good news? These are all solvable — with a fresh start.</p>
+            <h2 class="reveal">Nowhere to go but up</h2>
+            <p class="subtitle reveal" style="margin-bottom: var(--content-gap);">A full audit of seers.digital revealed critical gaps across every category. The good news? These are all solvable — with a fresh start.</p>
             <div class="card-grid reveal">
                 <div class="card">
                     <h3>On-Page SEO</h3>
-                    <p>Meta descriptions missing on every page. H1 tags broken sitewide.</p>
+                    <p>Meta descriptions missing on every single page. H1 tags broken sitewide.</p>
                 </div>
                 <div class="card">
                     <h3>Security</h3>
@@ -437,7 +502,7 @@
                 </div>
                 <div class="card">
                     <h3>Structured Data</h3>
-                    <p>One malformed schema block on the homepage. Nothing else.</p>
+                    <p>One malformed schema block on the homepage. Nothing on inner pages.</p>
                 </div>
                 <div class="card">
                     <h3>AI Readiness</h3>
@@ -451,13 +516,13 @@
     <!-- =========================================
          SLIDE 4: Why Not Fix the Current Site?
          ========================================= -->
-    <section class="slide">
+    <section class="slide alt">
         <div class="slide-content">
             <p class="label reveal">Why Rebuild?</p>
-            <h2 class="reveal">Patching won't get us where we need to be</h2>
+            <h2 class="reveal">Patching won't get us there</h2>
             <div class="two-col reveal">
                 <div>
-                    <h3 style="color: var(--accent-red); margin-bottom: var(--element-gap);">Strikingly Limitations</h3>
+                    <p class="col-header red">Strikingly Limitations</p>
                     <ul class="bullet-list">
                         <li>Limited control over meta tags, schema, and headers</li>
                         <li>604KB of HTML on the homepage alone</li>
@@ -466,12 +531,12 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 style="color: var(--accent-green); margin-bottom: var(--element-gap);">A Modern Platform Unlocks</h3>
+                    <p class="col-header green">A Modern Platform Unlocks</p>
                     <ul class="bullet-list">
                         <li>Full SEO and schema control out of the box</li>
                         <li>Fast, lightweight pages that rank better</li>
                         <li>Security headers, HSTS, CSP — enterprise standard</li>
-                        <li>AI-ready content architecture (llms.txt, GEO)</li>
+                        <li>AI-ready content architecture from day one</li>
                     </ul>
                 </div>
             </div>
@@ -482,7 +547,7 @@
     <!-- =========================================
          SLIDE 5: What a New Site Does for Us
          ========================================= -->
-    <section class="slide">
+    <section class="slide has-blob">
         <div class="slide-content">
             <p class="label reveal">What This Unlocks</p>
             <h2 class="reveal">More than a website — a growth engine</h2>
@@ -513,54 +578,54 @@
     </section>
 
     <!-- =========================================
-         SLIDE 6: SEO + GEO — Same Effort, Dual Benefit
+         SLIDE 6: SEO + GEO
          ========================================= -->
-    <section class="slide">
+    <section class="slide alt">
         <div class="slide-content">
             <p class="label reveal">SEO + GEO</p>
             <h2 class="reveal">One investment, two channels</h2>
-            <p class="subtitle reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">Stephen's right — people are increasingly using AI to find services. But here's the thing: the work that improves your Google ranking is the <em>same work</em> that gets you mentioned by ChatGPT, Claude, and Gemini.</p>
-            <div class="highlight-box warm reveal">
-                <h3 style="margin-bottom: var(--element-gap);">GEO — Generative Engine Optimisation</h3>
-                <p>Structured data, clear entity definitions, citeable content, and an llms.txt file all help AI models understand who we are and what we do. When someone asks an LLM <em>"Who does government IT consulting in Australia?"</em> — we want to be in the answer.</p>
+            <p class="subtitle reveal" style="margin-bottom: var(--content-gap);">Stephen's right — people are increasingly using AI to find services. But the work that improves your Google ranking is the <em>same work</em> that gets you mentioned by ChatGPT, Claude, and Gemini.</p>
+            <div class="callout reveal">
+                <h3>GEO — Generative Engine Optimisation</h3>
+                <p>Structured data, clear entity definitions, citeable content, and an llms.txt file all help AI models understand who we are and what we do. When someone asks an LLM <em>"Who does government IT consulting in Australia?"</em> — we want to be in that answer.</p>
             </div>
         </div>
         <span class="slide-num">6</span>
     </section>
 
     <!-- =========================================
-         SLIDE 7: Getting Picked Up by LLMs
+         SLIDE 7: How LLMs Decide
          ========================================= -->
-    <section class="slide">
+    <section class="slide has-blob">
         <div class="slide-content">
             <p class="label reveal">AI Visibility</p>
             <h2 class="reveal">How LLMs decide who to recommend</h2>
             <ul class="bullet-list reveal" style="max-width: 700px;">
                 <li><strong>Entity clarity</strong> — Organisation schema, clear "About" content, named team members. LLMs need to know <em>who</em> you are.</li>
-                <li><strong>Citeable content</strong> — Structured, factual statements with specifics. Not marketing fluff — real expertise that AI can quote.</li>
-                <li><strong>Topical authority</strong> — Regular, deep content on your core topics signals you're an authority in the space.</li>
+                <li><strong>Citeable content</strong> — Structured, factual statements with specifics. Not marketing fluff — real expertise AI can quote.</li>
+                <li><strong>Topical authority</strong> — Regular, deep content on your core topics signals you're a genuine authority in the space.</li>
                 <li><strong>Technical accessibility</strong> — An llms.txt file, clean HTML, and proper crawler access let AI systems actually read your site.</li>
             </ul>
-            <p class="reveal" style="margin-top: var(--content-gap); font-size: var(--small-size); color: var(--text-secondary);">Our current AI readiness score: <strong style="color: var(--accent-red);">10 out of 100</strong>. A rebuild takes us to best-in-class.</p>
+            <p class="reveal" style="margin-top: var(--content-gap); font-size: var(--small-size); color: var(--text-muted);">Our current AI readiness score: <strong style="color: var(--accent-red);">10 out of 100</strong>. A rebuild takes us to best-in-class.</p>
         </div>
         <span class="slide-num">7</span>
     </section>
 
     <!-- =========================================
-         SLIDE 8: Measuring with Psyke
+         SLIDE 8: Psyke
          ========================================= -->
-    <section class="slide">
+    <section class="slide alt">
         <div class="slide-content">
             <p class="label reveal">Measurement</p>
             <h2 class="reveal">Track progress with Psyke</h2>
-            <p class="subtitle reveal" style="max-width: 650px; margin-bottom: var(--content-gap);">A new website is only as good as our ability to measure its impact. Psyke gives us visibility into both traditional and AI-driven performance.</p>
+            <p class="subtitle reveal" style="margin-bottom: var(--content-gap);">A new website is only as good as our ability to measure its impact. Psyke gives us visibility into both traditional and AI-driven performance.</p>
             <div class="two-col reveal">
-                <div class="highlight-box green">
-                    <h3 style="margin-bottom: var(--element-gap);">SEO Performance</h3>
+                <div class="callout green">
+                    <h3>SEO Performance</h3>
                     <p>Track rankings, organic traffic, crawl health, and technical score improvements over time.</p>
                 </div>
-                <div class="highlight-box">
-                    <h3 style="margin-bottom: var(--element-gap);">GEO Performance</h3>
+                <div class="callout blue">
+                    <h3>GEO Performance</h3>
                     <p>Monitor how often we appear in AI-generated answers and recommendations across major LLM platforms.</p>
                 </div>
             </div>
@@ -571,18 +636,18 @@
     <!-- =========================================
          SLIDE 9: Recommendation
          ========================================= -->
-    <section class="slide">
+    <section class="slide has-blob">
         <div class="slide-content">
             <p class="label reveal">Recommendation</p>
             <h2 class="reveal">Build a new Seers Digital website</h2>
             <ul class="bullet-list reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">
-                <li>Migrate to a modern platform (WordPress, Webflow, or custom) with full SEO and security control</li>
-                <li>Design a professional, credible digital presence that matches our $50M+ delivery track record</li>
+                <li>Migrate to a modern platform with full SEO and security control</li>
+                <li>Design a professional, credible presence that matches our delivery track record</li>
                 <li>Build AI-ready content architecture from day one — schema, llms.txt, GEO-optimised copy</li>
                 <li>Establish a regular content cadence to build topical authority</li>
                 <li>Deploy Psyke to track SEO and GEO performance from launch</li>
             </ul>
-            <div class="highlight-box warm reveal">
+            <div class="callout reveal">
                 <p><strong>This is not a cosmetic refresh.</strong> It's building the digital foundation that lets Seers compete at the level we already operate at.</p>
             </div>
         </div>
@@ -592,18 +657,17 @@
     <!-- =========================================
          SLIDE 10: Closing
          ========================================= -->
-    <section class="slide" style="background: var(--text-primary);">
+    <section class="slide dark">
         <div class="slide-content centered">
-            <h1 class="reveal" style="color: white;">Let's build it.</h1>
-            <p class="subtitle reveal" style="color: rgba(255,255,255,0.6);">Questions? Thoughts? Let's discuss.</p>
-            <div class="divider reveal" style="background: var(--accent); margin: var(--content-gap) auto;"></div>
-            <p class="reveal" style="font-size: var(--small-size); color: rgba(255,255,255,0.4);">Mitch Malone · mitch@mitchmalone.com</p>
+            <h1 class="reveal">Let's build it<span style="color: var(--accent);">.</span></h1>
+            <p class="reveal text-secondary" style="font-size: clamp(0.9rem, 1.6vw, 1.15rem); margin-top: var(--content-gap);">Questions? Thoughts? Let's discuss.</p>
+            <p class="reveal" style="font-size: var(--small-size); color: rgba(255,255,255,0.3); margin-top: var(--content-gap);">Mitch Malone · mitch@mitchmalone.com</p>
         </div>
-        <span class="slide-num" style="color: rgba(255,255,255,0.2);">10</span>
+        <span class="slide-num">10</span>
     </section>
 
     <!-- =========================================
-         JAVASCRIPT — Navigation & Animations
+         JAVASCRIPT
          ========================================= -->
     <script>
         class SlidePresentation {
