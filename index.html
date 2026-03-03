@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A New Digital Home — Seers Digital</title>
+
+    <!-- Fonts: DM Sans for clean professionalism -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           THEME — Light, optimistic, professional
+           =========================================== */
+        :root {
+            --bg-primary: #FAFAF8;
+            --bg-slide-alt: #F0EFEB;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --accent: #2563EB;
+            --accent-light: #DBEAFE;
+            --accent-warm: #F59E0B;
+            --accent-warm-light: #FEF3C7;
+            --accent-green: #10B981;
+            --accent-green-light: #D1FAE5;
+            --accent-red: #EF4444;
+            --accent-red-light: #FEE2E2;
+
+            --font-display: 'DM Serif Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+
+            --title-size: clamp(2rem, 5.5vw, 4.5rem);
+            --h2-size: clamp(1.5rem, 3.5vw, 2.75rem);
+            --h3-size: clamp(1.1rem, 2vw, 1.5rem);
+            --body-size: clamp(0.8rem, 1.4vw, 1.125rem);
+            --small-size: clamp(0.7rem, 1vw, 0.875rem);
+
+            --slide-padding: clamp(1.5rem, 5vw, 5rem);
+            --content-gap: clamp(0.75rem, 2vw, 2rem);
+            --element-gap: clamp(0.3rem, 1vw, 0.75rem);
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --duration: 0.7s;
+        }
+
+        /* ===========================================
+           BASE
+           =========================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            height: 100%;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===========================================
+           SLIDES — Viewport locked
+           =========================================== */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding: var(--slide-padding);
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-height: 100%;
+            overflow: hidden;
+            max-width: 1100px;
+        }
+
+        .slide-content.centered {
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        /* Alternate bg */
+        .slide:nth-child(even) { background: var(--bg-slide-alt); }
+        .slide:nth-child(odd) { background: var(--bg-primary); }
+
+        /* ===========================================
+           TYPOGRAPHY
+           =========================================== */
+        h1 {
+            font-family: var(--font-display);
+            font-size: var(--title-size);
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: var(--h2-size);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--content-gap);
+        }
+
+        h3 {
+            font-family: var(--font-body);
+            font-size: var(--h3-size);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        p, li {
+            font-size: var(--body-size);
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-top: var(--element-gap);
+            line-height: 1.5;
+        }
+
+        .label {
+            font-size: var(--small-size);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: var(--element-gap);
+        }
+
+        /* ===========================================
+           COMPONENTS
+           =========================================== */
+
+        /* Score badge */
+        .score-badge {
+            display: inline-flex;
+            align-items: baseline;
+            gap: clamp(0.3rem, 0.8vw, 0.6rem);
+            margin-bottom: var(--content-gap);
+        }
+
+        .score-badge .number {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1;
+            color: var(--accent-red);
+        }
+
+        .score-badge .out-of {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Bullet list */
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(0.5rem, 1.2vh, 1rem);
+        }
+
+        .bullet-list li {
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Cards grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+            gap: clamp(0.6rem, 1.5vw, 1.25rem);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .card .icon {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: var(--element-gap);
+        }
+
+        .card h3 {
+            margin-bottom: clamp(0.2rem, 0.5vw, 0.4rem);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        .card p {
+            font-size: var(--small-size);
+            line-height: 1.5;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: var(--accent-light);
+            border-radius: 12px;
+            padding: clamp(1rem, 2.5vw, 2rem);
+            border-left: 4px solid var(--accent);
+        }
+
+        .highlight-box.warm {
+            background: var(--accent-warm-light);
+            border-left-color: var(--accent-warm);
+        }
+
+        .highlight-box.green {
+            background: var(--accent-green-light);
+            border-left-color: var(--accent-green);
+        }
+
+        /* Two-column */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(1rem, 3vw, 3rem);
+            align-items: start;
+        }
+
+        @media (max-width: 700px) {
+            .two-col { grid-template-columns: 1fr; }
+        }
+
+        /* Slide number */
+        .slide-num {
+            position: absolute;
+            bottom: clamp(0.75rem, 2vw, 1.5rem);
+            right: clamp(1rem, 3vw, 2rem);
+            font-size: var(--small-size);
+            color: rgba(0,0,0,0.2);
+            font-weight: 500;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            margin: var(--element-gap) 0;
+        }
+
+        /* ===========================================
+           ANIMATIONS
+           =========================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity var(--duration) var(--ease-out-expo),
+                        transform var(--duration) var(--ease-out-expo);
+        }
+
+        .slide.visible .reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal:nth-child(1) { transition-delay: 0.05s; }
+        .reveal:nth-child(2) { transition-delay: 0.15s; }
+        .reveal:nth-child(3) { transition-delay: 0.25s; }
+        .reveal:nth-child(4) { transition-delay: 0.35s; }
+        .reveal:nth-child(5) { transition-delay: 0.45s; }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        /* Nav dots */
+        .nav-dots {
+            position: fixed;
+            right: clamp(0.5rem, 1.5vw, 1.25rem);
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .nav-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* ===========================================
+           RESPONSIVE
+           =========================================== */
+        @media (max-height: 700px) {
+            :root {
+                --slide-padding: clamp(1rem, 3vw, 2.5rem);
+                --content-gap: clamp(0.5rem, 1.5vw, 1rem);
+                --title-size: clamp(1.5rem, 5vw, 3rem);
+                --h2-size: clamp(1.25rem, 3vw, 2rem);
+            }
+        }
+
+        @media (max-height: 600px) {
+            :root {
+                --slide-padding: clamp(0.75rem, 2.5vw, 1.5rem);
+                --content-gap: clamp(0.4rem, 1vw, 0.75rem);
+            }
+            .nav-dots { display: none; }
+        }
+
+        @media (max-height: 500px) {
+            :root {
+                --title-size: clamp(1.2rem, 4vw, 1.8rem);
+                --h2-size: clamp(1rem, 2.5vw, 1.5rem);
+                --body-size: clamp(0.65rem, 1vw, 0.85rem);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.2s !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- =========================================
+         SLIDE 1: Title
+         ========================================= -->
+    <section class="slide" style="background: var(--bg-primary);">
+        <div class="slide-content centered">
+            <p class="label reveal">Seers Digital — Website Strategy</p>
+            <h1 class="reveal">A New Digital Home</h1>
+            <p class="subtitle reveal">Why a website rebuild will help us win more work,<br>attract better talent, and get found — by humans and AI alike.</p>
+            <div class="divider reveal" style="margin: var(--content-gap) auto;"></div>
+            <p class="reveal" style="font-size: var(--small-size); color: var(--text-secondary);">Mitch Malone · March 2026</p>
+        </div>
+        <span class="slide-num">1</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 2: The Opportunity
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">The Opportunity</p>
+            <h2 class="reveal">Our website should be our best salesperson</h2>
+            <p class="subtitle reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">We deliver $50M+ in technology services to Government and Enterprise. Our website should reflect that calibre — and right now, it doesn't.</p>
+            <ul class="bullet-list reveal">
+                <li>Built on Strikingly — a consumer drag-and-drop builder, not an enterprise platform</li>
+                <li>Blog dormant since September 2023 — over 2.5 years with no fresh content</li>
+                <li>Missing basic SEO foundations that every competitor already has</li>
+                <li>No visibility to AI search tools like ChatGPT, Claude, or Gemini</li>
+            </ul>
+        </div>
+        <span class="slide-num">2</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 3: The Health Check
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">SEO Health Check</p>
+            <div class="score-badge reveal">
+                <span class="number">28</span>
+                <span class="out-of">/ 100</span>
+            </div>
+            <h2 class="reveal" style="margin-bottom: var(--element-gap);">There's nowhere to go but up</h2>
+            <p class="subtitle reveal" style="max-width: 600px; margin-bottom: var(--content-gap);">A full audit of seers.digital revealed critical gaps across every category. The good news? These are all solvable — with a fresh start.</p>
+            <div class="card-grid reveal">
+                <div class="card">
+                    <h3>On-Page SEO</h3>
+                    <p>Meta descriptions missing on every page. H1 tags broken sitewide.</p>
+                </div>
+                <div class="card">
+                    <h3>Security</h3>
+                    <p>Zero security headers. No CSP, HSTS, or X-Frame-Options.</p>
+                </div>
+                <div class="card">
+                    <h3>Structured Data</h3>
+                    <p>One malformed schema block on the homepage. Nothing else.</p>
+                </div>
+                <div class="card">
+                    <h3>AI Readiness</h3>
+                    <p>Scored 10/100. No llms.txt, no entity clarity, no citeable content.</p>
+                </div>
+            </div>
+        </div>
+        <span class="slide-num">3</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 4: Why Not Fix the Current Site?
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">Why Rebuild?</p>
+            <h2 class="reveal">Patching won't get us where we need to be</h2>
+            <div class="two-col reveal">
+                <div>
+                    <h3 style="color: var(--accent-red); margin-bottom: var(--element-gap);">Strikingly Limitations</h3>
+                    <ul class="bullet-list">
+                        <li>Limited control over meta tags, schema, and headers</li>
+                        <li>604KB of HTML on the homepage alone</li>
+                        <li>Can't add security headers or structured data properly</li>
+                        <li>No server-side rendering control</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: var(--element-gap);">A Modern Platform Unlocks</h3>
+                    <ul class="bullet-list">
+                        <li>Full SEO and schema control out of the box</li>
+                        <li>Fast, lightweight pages that rank better</li>
+                        <li>Security headers, HSTS, CSP — enterprise standard</li>
+                        <li>AI-ready content architecture (llms.txt, GEO)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <span class="slide-num">4</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 5: What a New Site Does for Us
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">What This Unlocks</p>
+            <h2 class="reveal">More than a website — a growth engine</h2>
+            <div class="card-grid reveal">
+                <div class="card">
+                    <div class="icon">🏆</div>
+                    <h3>Win More Bids</h3>
+                    <p>A professional digital presence builds trust before the first meeting. Evaluators check your website.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <h3>Get Found</h3>
+                    <p>Proper SEO means showing up when people search for consulting services in our space.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🤖</div>
+                    <h3>Get Mentioned by AI</h3>
+                    <p>LLMs like ChatGPT and Claude recommend companies they can understand. Right now, they can't understand us.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💼</div>
+                    <h3>Showcase Expertise</h3>
+                    <p>Case studies, team profiles, and thought leadership that demonstrate what we actually do.</p>
+                </div>
+            </div>
+        </div>
+        <span class="slide-num">5</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 6: SEO + GEO — Same Effort, Dual Benefit
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">SEO + GEO</p>
+            <h2 class="reveal">One investment, two channels</h2>
+            <p class="subtitle reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">Stephen's right — people are increasingly using AI to find services. But here's the thing: the work that improves your Google ranking is the <em>same work</em> that gets you mentioned by ChatGPT, Claude, and Gemini.</p>
+            <div class="highlight-box warm reveal">
+                <h3 style="margin-bottom: var(--element-gap);">GEO — Generative Engine Optimisation</h3>
+                <p>Structured data, clear entity definitions, citeable content, and an llms.txt file all help AI models understand who we are and what we do. When someone asks an LLM <em>"Who does government IT consulting in Australia?"</em> — we want to be in the answer.</p>
+            </div>
+        </div>
+        <span class="slide-num">6</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 7: Getting Picked Up by LLMs
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">AI Visibility</p>
+            <h2 class="reveal">How LLMs decide who to recommend</h2>
+            <ul class="bullet-list reveal" style="max-width: 700px;">
+                <li><strong>Entity clarity</strong> — Organisation schema, clear "About" content, named team members. LLMs need to know <em>who</em> you are.</li>
+                <li><strong>Citeable content</strong> — Structured, factual statements with specifics. Not marketing fluff — real expertise that AI can quote.</li>
+                <li><strong>Topical authority</strong> — Regular, deep content on your core topics signals you're an authority in the space.</li>
+                <li><strong>Technical accessibility</strong> — An llms.txt file, clean HTML, and proper crawler access let AI systems actually read your site.</li>
+            </ul>
+            <p class="reveal" style="margin-top: var(--content-gap); font-size: var(--small-size); color: var(--text-secondary);">Our current AI readiness score: <strong style="color: var(--accent-red);">10 out of 100</strong>. A rebuild takes us to best-in-class.</p>
+        </div>
+        <span class="slide-num">7</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 8: Measuring with Psyke
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">Measurement</p>
+            <h2 class="reveal">Track progress with Psyke</h2>
+            <p class="subtitle reveal" style="max-width: 650px; margin-bottom: var(--content-gap);">A new website is only as good as our ability to measure its impact. Psyke gives us visibility into both traditional and AI-driven performance.</p>
+            <div class="two-col reveal">
+                <div class="highlight-box green">
+                    <h3 style="margin-bottom: var(--element-gap);">SEO Performance</h3>
+                    <p>Track rankings, organic traffic, crawl health, and technical score improvements over time.</p>
+                </div>
+                <div class="highlight-box">
+                    <h3 style="margin-bottom: var(--element-gap);">GEO Performance</h3>
+                    <p>Monitor how often we appear in AI-generated answers and recommendations across major LLM platforms.</p>
+                </div>
+            </div>
+        </div>
+        <span class="slide-num">8</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 9: Recommendation
+         ========================================= -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="label reveal">Recommendation</p>
+            <h2 class="reveal">Build a new Seers Digital website</h2>
+            <ul class="bullet-list reveal" style="max-width: 700px; margin-bottom: var(--content-gap);">
+                <li>Migrate to a modern platform (WordPress, Webflow, or custom) with full SEO and security control</li>
+                <li>Design a professional, credible digital presence that matches our $50M+ delivery track record</li>
+                <li>Build AI-ready content architecture from day one — schema, llms.txt, GEO-optimised copy</li>
+                <li>Establish a regular content cadence to build topical authority</li>
+                <li>Deploy Psyke to track SEO and GEO performance from launch</li>
+            </ul>
+            <div class="highlight-box warm reveal">
+                <p><strong>This is not a cosmetic refresh.</strong> It's building the digital foundation that lets Seers compete at the level we already operate at.</p>
+            </div>
+        </div>
+        <span class="slide-num">9</span>
+    </section>
+
+    <!-- =========================================
+         SLIDE 10: Closing
+         ========================================= -->
+    <section class="slide" style="background: var(--text-primary);">
+        <div class="slide-content centered">
+            <h1 class="reveal" style="color: white;">Let's build it.</h1>
+            <p class="subtitle reveal" style="color: rgba(255,255,255,0.6);">Questions? Thoughts? Let's discuss.</p>
+            <div class="divider reveal" style="background: var(--accent); margin: var(--content-gap) auto;"></div>
+            <p class="reveal" style="font-size: var(--small-size); color: rgba(255,255,255,0.4);">Mitch Malone · mitch@mitchmalone.com</p>
+        </div>
+        <span class="slide-num" style="color: rgba(255,255,255,0.2);">10</span>
+    </section>
+
+    <!-- =========================================
+         JAVASCRIPT — Navigation & Animations
+         ========================================= -->
+    <script>
+        class SlidePresentation {
+            constructor() {
+                this.slides = document.querySelectorAll('.slide');
+                this.progressBar = document.getElementById('progressBar');
+                this.navDots = document.getElementById('navDots');
+                this.currentSlide = 0;
+
+                this.createNavDots();
+                this.setupIntersectionObserver();
+                this.setupKeyboardNav();
+                this.updateProgress();
+            }
+
+            createNavDots() {
+                this.slides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                    dot.addEventListener('click', () => {
+                        this.slides[i].scrollIntoView({ behavior: 'smooth' });
+                    });
+                    this.navDots.appendChild(dot);
+                });
+                this.dots = this.navDots.querySelectorAll('.nav-dot');
+            }
+
+            setupIntersectionObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const index = Array.from(this.slides).indexOf(entry.target);
+                            this.currentSlide = index;
+                            this.updateDots();
+                            this.updateProgress();
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                this.slides.forEach(slide => observer.observe(slide));
+            }
+
+            setupKeyboardNav() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        this.goTo(Math.min(this.currentSlide + 1, this.slides.length - 1));
+                    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        this.goTo(Math.max(this.currentSlide - 1, 0));
+                    }
+                });
+            }
+
+            goTo(index) {
+                this.slides[index].scrollIntoView({ behavior: 'smooth' });
+            }
+
+            updateDots() {
+                this.dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === this.currentSlide);
+                });
+            }
+
+            updateProgress() {
+                const pct = ((this.currentSlide + 1) / this.slides.length) * 100;
+                this.progressBar.style.width = pct + '%';
+            }
+        }
+
+        new SlidePresentation();
+    </script>
+</body>
+</html>
